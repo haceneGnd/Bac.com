@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 برنامج الدراسة مع مواقيت الصلاة - تاجنانت</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <div>
+                    <h1>برنامج الدراسة الذكي</h1>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> تاجنانت، ميلة، الجزائر</p>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="active"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="#schedule"><i class="fas fa-calendar-alt"></i> الجدول</a>
+                <a href="#prayer"><i class="fas fa-mosque"></i> مواقيت الصلاة</a>
+                <a href="#progress"><i class="fas fa-chart-line"></i> التقدم</a>
+                <a href="#tasks"><i class="fas fa-tasks"></i> المهام</a>
+                <a href="#settings"><i class="fas fa-cog"></i> الإعدادات</a>
+            </div>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- الصفحة الرئيسية -->
+    <main class="container">
+        <section id="home" class="section">
+            <header class="hero">
+                <h2><i class="fas fa-star"></i> برنامج الدراسة الأسبوعي المنظم</h2>
+                <p>برنامج ذكي ومتوازن يراعي الأولويات الدراسية والالتزامات الدينية</p>
+                <div class="time-display">
+                    <div class="current-time">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <span id="currentDate">--/--/----</span>
+                            <span id="currentTime">--:--:--</span>
+                            <small id="hijriDate">--/--/---- هـ</small>
+                        </div>
+                    </div>
+                    <div class="prayer-reminder">
+                        <i class="fas fa-bell"></i>
+                        <div>
+                            <span>الصلاة القادمة: <strong id="nextPrayerName">--</strong></span>
+                            <span id="nextPrayerTime">--:--</span>
+                            <small id="timeRemaining">--:--:-- متبقي</small>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- نظرة سريعة -->
+            <div class="quick-overview">
+                <div class="card priority-card">
+                    <h3><i class="fas fa-bullseye"></i> الأولويات</h3>
+                    <div class="priority-list">
+                        <div class="priority-item math">
+                            <span>الرياضيات</span>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="priority-item physics">
+                            <span>الفيزياء</span>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="priority-item science">
+                            <span>العلوم</span>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="priority-item other">
+                            <span>المواد الأخرى</span>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card study-timer">
+                    <h3><i class="fas fa-hourglass-half"></i> مؤقت الدراسة</h3>
+                    <div class="timer-display">
+                        <div class="time-circle">
+                            <span id="minutes">45</span>:<span id="seconds">00</span>
+                        </div>
+                        <div class="timer-controls">
+                            <button id="startTimer" class="btn btn-primary">
+                                <i class="fas fa-play"></i> ابدأ
+                            </button>
+                            <button id="pauseTimer" class="btn btn-secondary">
+                                <i class="fas fa-pause"></i> إيقاف
+                            </button>
+                            <button id="resetTimer" class="btn btn-danger">
+                                <i class="fas fa-redo"></i> إعادة
+                            </button>
+                        </div>
+                        <div class="session-info">
+                            <p>جلسة دراسة: <span id="sessionType">فهم الدروس</span></p>
+                            <p class="prayer-alert" id="prayerAlert"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- مواقيت الصلاة -->
+        <section id="prayer" class="section">
+            <h2><i class="fas fa-mosque"></i> مواقيت الصلاة - تاجنانت</h2>
+            
+            <div class="prayer-times-container">
+                <div class="prayer-header">
+                    <div class="date-selector">
+                        <button id="prevDay" class="btn btn-secondary">
+                            <i class="fas fa-chevron-right"></i> اليوم السابق
+                        </button>
+                        <h3 id="prayerDate">اليوم</h3>
+                        <button id="nextDay" class="btn btn-secondary">
+                            اليوم التالي <i class="fas fa-chevron-left"></i>
+                        </button>
+                    </div>
+                    <div class="location-info">
+                        <p><i class="fas fa-map-marker-alt"></i> تاجنانت، ميلة، الجزائر</p>
+                        <p id="prayerHijriDate">--/--/---- هـ</p>
+                    </div>
+                </div>
+                
+                <div class="prayer-times-grid">
+                    <!-- مواقيت الصلاة ستظهر هنا -->
+                </div>
+                
+                <div class="prayer-notes">
+                    <h4><i class="fas fa-info-circle"></i> ملاحظات هامة:</h4>
+                    <ul>
+                        <li>التوقيت حسب مدينة تاجنانت، ولاية ميلة، الجزائر</li>
+                        <li>يتم حساب المواقيت بناءً على الفصول الأربعة</li>
+                        <li>الوقت المتبقي يظهر للصلاة القادمة</li>
+                        <li>الفترات المحجوزة تتكيف مع وقت صلاة المغرب</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- جدول الدراسة الأسبوعي -->
+        <section id="schedule" class="section">
+            <h2><i class="fas fa-calendar-alt"></i> الجدول الأسبوعي</h2>
+            
+            <div class="day-filter">
+                <button class="filter-btn active" data-day="all">كل الأيام</button>
+                <button class="filter-btn" data-day="saturday">السبت</button>
+                <button class="filter-btn" data-day="sunday">الأحد</button>
+                <button class="filter-btn" data-day="monday">الاثنين</button>
+                <button class="filter-btn" data-day="tuesday">الثلاثاء</button>
+                <button class="filter-btn" data-day="wednesday">الأربعاء</button>
+                <button class="filter-btn" data-day="thursday">الخميس</button>
+                <button class="filter-btn" data-day="friday">الجمعة</button>
+            </div>
+
+            <div class="schedule-table">
+                <!-- سيتم ملؤه بالجافاسكريبت -->
+            </div>
+
+            <!-- الفترة المحجوزة -->
+            <div class="reserved-times">
+                <h3><i class="fas fa-calendar-times"></i> الفترات المحجوزة للصلاة</h3>
+                <div class="reserved-list">
+                    <div class="reserved-item">
+                        <i class="fas fa-mosque"></i>
+                        <div>
+                            <strong>الأحد، الاثنين، الأربعاء</strong>
+                            <p id="reservedTimeDisplay">18:30 - 21:30 (صلاة + راحة)</p>
+                            <small>يتم تعديلها تلقائياً حسب وقت صلاة المغرب</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- تتبع التقدم -->
+        <section id="progress" class="section">
+            <h2><i class="fas fa-chart-line"></i> تتبع التقدم</h2>
+            
+            <div class="progress-stats">
+                <div class="stat-card">
+                    <div class="stat-icon math">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h4>الرياضيات</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-progress="65"></div>
+                    </div>
+                    <span class="stat-value">65%</span>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon physics">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <h4>الفيزياء</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-progress="55"></div>
+                    </div>
+                    <span class="stat-value">55%</span>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon science">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h4>العلوم</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-progress="75"></div>
+                    </div>
+                    <span class="stat-value">75%</span>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon other">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h4>المواد الأخرى</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-progress="40"></div>
+                    </div>
+                    <span class="stat-value">40%</span>
+                </div>
+            </div>
+            
+            <div class="weekly-summary">
+                <h3><i class="fas fa-chart-bar"></i> ملخص هذا الأسبوع</h3>
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <i class="fas fa-clock"></i>
+                        <h4>إجمالي ساعات الدراسة</h4>
+                        <p class="summary-value">18.5 <span>ساعة</span></p>
+                    </div>
+                    <div class="summary-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>المهام المكتملة</h4>
+                        <p class="summary-value">24 <span>مهمة</span></p>
+                    </div>
+                    <div class="summary-card">
+                        <i class="fas fa-fire"></i>
+                        <h4>أيام متتالية</h4>
+                        <p class="summary-value">7 <span>يوم</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قائمة المهام -->
+        <section id="tasks" class="section">
+            <h2><i class="fas fa-tasks"></i> المهام اليومية</h2>
+            
+            <div class="task-container">
+                <div class="task-input">
+                    <input type="text" id="taskInput" placeholder="أضف مهمة جديدة...">
+                    <select id="taskSubject">
+                        <option value="math">الرياضيات</option>
+                        <option value="physics">الفيزياء</option>
+                        <option value="science">العلوم</option>
+                        <option value="other">مواد أخرى</option>
+                    </select>
+                    <button id="addTask" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> إضافة
+                    </button>
+                </div>
+                
+                <div class="task-filters">
+                    <button class="filter-btn active" data-filter="all">الكل</button>
+                    <button class="filter-btn" data-filter="math">رياضيات</button>
+                    <button class="filter-btn" data-filter="physics">فيزياء</button>
+                    <button class="filter-btn" data-filter="science">علوم</button>
+                    <button class="filter-btn" data-filter="other">أخرى</button>
+                </div>
+                
+                <div class="task-list">
+                    <!-- سيتم ملؤه بالجافاسكريبت -->
+                </div>
+            </div>
+        </section>
+
+        <!-- الإعدادات -->
+        <section id="settings" class="section">
+            <h2><i class="fas fa-cog"></i> الإعدادات</h2>
+            
+            <div class="settings-grid">
+                <div class="setting-card">
+                    <h3><i class="fas fa-bell"></i> الإشعارات</h3>
+                    <div class="setting-option">
+                        <label>
+                            <input type="checkbox" id="prayerNotifications" checked>
+                            تذكير مواقيت الصلاة
+                        </label>
+                    </div>
+                    <div class="setting-option">
+                        <label>
+                            <input type="checkbox" id="studyNotifications" checked>
+                            تذكير جلسات الدراسة
+                        </label>
+                    </div>
+                    <div class="setting-option">
+                        <label>
+                            <input type="checkbox" id="breakNotifications">
+                            تذكير بفترات الراحة
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="setting-card">
+                    <h3><i class="fas fa-clock"></i> توقيت الجلسات</h3>
+                    <div class="setting-option">
+                        <label>مدة جلسة الدراسة (دقائق)</label>
+                        <input type="number" id="studyDuration" value="45" min="15" max="120">
+                    </div>
+                    <div class="setting-option">
+                        <label>مدة الاستراحة (دقائق)</label>
+                        <input type="number" id="breakDuration" value="5" min="1" max="30">
+                    </div>
+                </div>
+                
+                <div class="setting-card">
+                    <h3><i class="fas fa-palette"></i> المظهر</h3>
+                    <div class="theme-options">
+                        <button class="theme-btn light active" data-theme="light">
+                            <i class="fas fa-sun"></i> فاتح
+                        </button>
+                        <button class="theme-btn dark" data-theme="dark">
+                            <i class="fas fa-moon"></i> داكن
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="setting-card">
+                    <h3><i class="fas fa-mosque"></i> إعدادات الصلاة</h3>
+                    <div class="setting-option">
+                        <label>وقت التنبيه قبل الصلاة (دقائق)</label>
+                        <select id="prayerAlertTime">
+                            <option value="15">15 دقيقة</option>
+                            <option value="10">10 دقائق</option>
+                            <option value="5">5 دقائق</option>
+                            <option value="0">وقت الصلاة فقط</option>
+                        </select>
+                    </div>
+                    <div class="setting-option">
+                        <label>
+                            <input type="checkbox" id="autoAdjustSchedule" checked>
+                            تعديل الجدول تلقائياً مع الصلاة
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-graduation-cap"></i> برنامج الدراسة الذكي</h3>
+                    <p>تاجنانت، ميلة، الجزائر</p>
+                    <p>مواقيت الصلاة محسوبة حسب موقعك</p>
+                </div>
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <a href="#home">الرئيسية</a>
+                    <a href="#prayer">مواقيت الصلاة</a>
+                    <a href="#schedule">الجدول</a>
+                </div>
+                <div class="footer-section">
+                    <h3>دعم إسلامي</h3>
+                    <p><i class="fas fa-quran"></i> "وأقم الصلاة إن الصلاة تنهى عن الفحشاء والمنكر"</p>
+                    <p>سورة العنكبوت (45)</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 برنامج الدراسة الذكي - تاجنانت، ميلة، الجزائر</p>
+                <p class="prayer-update">آخر تحديث لمواقيت الصلاة: <span id="lastUpdate"></span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
